@@ -1,9 +1,5 @@
 import os, shutil, re
 
-
-path = input('Ввведіть будь-ласка шлях до папки:')
-path = os.path.normpath(path)
-
 def normalize(file_name):
     CYRILLIC_SYMBOLS = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяєіїґ"
     TRANSLATION = ("a", "b", "v", "g", "d", "e", "e", "j", "z", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u",
@@ -30,7 +26,6 @@ def proccessing(path):
             archives = ('.zip', '.gz', '.tar')
             file_name = normalize(file_name)
             norm_name = file_name + file_ext
-            print(item)
             if file_ext in images:
                 os.makedirs(os.path.join(path, 'images'), exist_ok=True)
                 os.rename(os.path.join(path, item), os.path.join(path, 'images', norm_name))
@@ -57,7 +52,6 @@ def proccessing(path):
 def sorter(path):
     ignore_list = ('archives', 'video', 'audio', 'documents', 'images')
     items = os.listdir(path)
-    print(items)
     for item in items:
         item_path = os.path.join(path, item)
         item_path = os.path.normpath(item_path)
@@ -66,8 +60,10 @@ def sorter(path):
             if not os.listdir(item_path):
                 os.rmdir(item_path)
         elif os.path.isfile(item_path):
-            print('f -' + item_path)
-            proccessing(path)      
+            proccessing(path)
+            
+path = input('Ввведіть будь-ласка шлях до папки:')
+path = os.path.normpath(path)      
 
 sorter(path)
 
